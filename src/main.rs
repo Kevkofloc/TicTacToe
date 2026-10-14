@@ -7,11 +7,15 @@ fn main() {
     let mut count = 0;
     let mut playfield = vec![vec![' ',' ',' '],vec![' ',' ',' '] ,vec![' ',' ',' ']];
     println!("{:?}", matrix);
+
+    //game starts
     'game: loop{
+        //check which players turn
         if player == 1{
             println!("Spieler X ist dran");
         }
         else { println!("Spieler O ist dran") }
+        //enter coordinates for position 
         let mut coordinatex = String::new();
         let mut coordinatey = String::new();
         println!("Enter your move:");
@@ -25,6 +29,8 @@ fn main() {
             .read_line(&mut coordinatey)
             .expect("Fehler");
         let coordinatey = coordinatey.trim().parse::<i32>().unwrap();
+
+        //check for errors
         if coordinatex <0 || coordinatex >2 || coordinatey<0||coordinatey>2{
             println!("Fehler");
             continue 'game;
@@ -33,6 +39,8 @@ fn main() {
             println!("Besetzt");
             continue 'game;
         }
+
+        //fill in symbol and show game field
         matrix[coordinatey as usize][coordinatex as usize] = player;
         if player == 1{
             playfield[coordinatey as usize][coordinatex as usize] = 'X';
@@ -47,6 +55,8 @@ fn main() {
             if x != 2{
             println!("-----------------");}
         }
+        
+        //check if someone won
         let test3 = matrix[0][0]+matrix[1][1]+matrix[2][2];
         let test4 = matrix[0][2]+matrix[1][1]+matrix[2][0];
         for i in 0..3{
